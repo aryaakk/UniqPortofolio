@@ -1,34 +1,128 @@
 const board = document.querySelector(".board");
 
-const randomPosition = () => {
-  return ~~(Math.random() * 15) + 1;
+const randomPositionX = () => {
+  return ~~(Math.random() * 26) + 1;
+};
+const randomPositionY = () => {
+  return ~~(Math.random() * 20) + 1;
 };
 
 let config = {
   speed: 100,
-  level: 1,
+  level: 0,
+  countEats: 0,
   player: {
-    x: randomPosition(),
-    y: randomPosition(),
+    x: randomPositionX(),
+    y: randomPositionY(),
   },
   food: {
-    x: randomPosition(),
-    y: randomPosition(),
+    x: randomPositionX(),
+    y: randomPositionY(),
   },
   velocity: {
     x: 0,
     y: 0,
   },
   showTitle: function () {
-    const title = document.getElementById("title_1");
-    title.style.opacity = 1;
-    title.style.visibility = "visible";
-    title.style.zIndex = 1;
-    setTimeout(() => {
-      title.style.opacity = 0;
-      title.style.visibility = "hidden";
-      title.style.zIndex = -1;
-    }, 2000);
+    const title = document.getElementById("titleShow");
+    const instagram = document.getElementById("instagram");
+    const github = document.getElementById("github");
+    const ketIg = document.getElementById("ket-ig");
+    const ketGithub = document.getElementById("ket-github");
+
+    if (this.level === 1) {
+      title.innerHTML = "Welcome to...";
+      title.style.display = "inline";
+      title.classList.add("show");
+      setTimeout(() => {
+        title.classList.remove("show");
+        title.classList.add("hide");
+      }, 4500);
+      setTimeout(() => {
+        title.classList.remove("hide");
+        title.style.display = "none";
+      }, 5000);
+    } else if (this.level === 2) {
+      title.innerHTML = "Unique Portofolio...";
+      title.style.display = "inline";
+      title.classList.add("show");
+      setTimeout(() => {
+        title.classList.remove("show");
+        title.classList.add("hide");
+      }, 4500);
+      setTimeout(() => {
+        title.classList.remove("hide");
+        title.style.display = "none";
+      }, 5000);
+    } else if (this.level === 3) {
+      title.innerHTML = "By...";
+      title.style.display = "inline";
+      title.classList.add("show");
+      setTimeout(() => {
+        title.classList.remove("show");
+        title.classList.add("hide");
+      }, 4500);
+      setTimeout(() => {
+        title.classList.remove("hide");
+        title.style.display = "none";
+      }, 5000);
+    } else if (this.level === 4) {
+      title.innerHTML = "Course Online Dea Aprizal!!";
+      title.style.display = "inline";
+      title.classList.add("show");
+      setTimeout(() => {
+        title.classList.remove("show");
+        title.classList.add("hide");
+      }, 4500);
+      setTimeout(() => {
+        title.classList.remove("hide");
+        title.style.display = "none";
+      }, 5000);
+    } else if (this.level === 5) {
+      title.innerHTML = "Let see my Social Media!!";
+      title.style.display = "inline";
+      title.classList.add("show");
+      setTimeout(() => {
+        title.classList.remove("show");
+        title.classList.add("hide");
+      }, 4500);
+      setTimeout(() => {
+        title.classList.remove("hide");
+        title.style.display = "none";
+      }, 5000);
+    } else if (this.level === 6) {
+      title.innerHTML = "I Just Have One Social Media Account that is..";
+      title.style.display = "inline";
+      title.classList.add("show");
+      setTimeout(() => {
+        title.classList.remove("show");
+        title.classList.add("hide");
+      }, 4500);
+      setTimeout(() => {
+        title.classList.remove("hide");
+        title.style.display = "none";
+      }, 5000);
+    } else if (this.level === 7) {
+      instagram.style.display = "flex";
+      ketIg.style.display = "block";
+      setTimeout(() => {
+        ketIg.classList.add("hide-ket");
+      }, 4500);
+      setTimeout(() => {
+        ketIg.classList.remove("hide-ket");
+        ketIg.style.display = "none";
+      }, 5000);
+    } else if (this.level === 8) {
+      github.style.display = "flex";
+      ketGithub.style.display = "block";
+      setTimeout(() => {
+        ketGithub.classList.add("hide-ket");
+      }, 4500);
+      setTimeout(() => {
+        ketGithub.classList.remove("hide-ket");
+        ketGithub.style.display = "none";
+      }, 5000);
+    }
   },
 };
 
@@ -44,32 +138,46 @@ const games = {
     config.player.y += config.velocity.y;
   },
   resetPlayerPosition: function () {
-    if (
-      config.player.x <= 0 ||
-      config.player.x >= 16 ||
-      config.player.y <= 0 ||
-      config.player.y >= 16
-    ) {
-      console.log("Mentok Bruh");
-      config.player.x = 7;
-      config.player.y = 7;
+    if (config.player.x <= 0) {
+      config.player.x = 27;
+      config.player.y = config.player.y;
+    } else if (config.player.x >= 27) {
+      config.player.x = 1;
+      config.player.y = config.player.y;
+    }
+    if (config.player.y <= 0) {
+      config.player.x = config.player.x;
+      config.player.y = 21;
+    } else if (config.player.y >= 21) {
+      config.player.x = config.player.x;
+      config.player.y = 1;
     }
   },
   levelUp: function () {
     config.level += 1;
   },
   isWin: function () {
+    const eats = document.getElementById("eats");
+    const level = document.getElementById("level");
+
     if (config.food.x == config.player.x && config.food.y == config.player.y) {
-      this.levelUp();
-      config.showTitle();
+      config.countEats += 1;
+      eats.innerHTML = config.countEats;
+      if (config.countEats % 5 == 0) {
+        this.levelUp();
+        level.innerHTML = config.level;
+        config.showTitle();
+        console.log("level kamu saat ini ", config.level);
+      }
+      console.log(config.countEats);
       return true;
     } else {
       return false;
     }
   },
   randomFood: function () {
-    config.food.x = randomPosition();
-    config.food.y = randomPosition();
+    config.food.x = randomPositionX();
+    config.food.y = randomPositionY();
   },
 };
 
