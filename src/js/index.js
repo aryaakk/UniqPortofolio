@@ -16,8 +16,10 @@ let config = {
     y: randomPositionY(),
   },
   food: {
-    x: randomPositionX(),
-    y: randomPositionY(),
+    position: {
+      x: randomPositionX(),
+      y: randomPositionY(),
+    },
   },
   velocity: {
     x: 0,
@@ -128,7 +130,7 @@ let config = {
 
 const games = {
   createFood: function () {
-    board.innerHTML = `<div class="food" style="grid-area : ${config.food.y} / ${config.food.x}"></div>`;
+    board.innerHTML = `<div class="food" style="grid-area : ${config.food.position.y} / ${config.food.position.x}"></div>`;
   },
   createPlayer: function () {
     board.innerHTML += `<div class="player" id="player" style="grid-area : ${config.player.y} / ${config.player.x}"></div>`;
@@ -160,7 +162,10 @@ const games = {
     const eats = document.getElementById("eats");
     const level = document.getElementById("level");
 
-    if (config.food.x == config.player.x && config.food.y == config.player.y) {
+    if (
+      config.food.position.x == config.player.x &&
+      config.food.position.y == config.player.y
+    ) {
       config.countEats += 1;
       eats.innerHTML = config.countEats;
       if (config.countEats % 5 == 0) {
@@ -176,13 +181,37 @@ const games = {
     }
   },
   randomFood: function () {
-    config.food.x = randomPositionX();
-    config.food.y = randomPositionY();
+    config.food.position.x = randomPositionX();
+    config.food.position.y = randomPositionY();
   },
 };
 
 function movement(listen) {
+  // console.log(listen.key);
   switch (listen.key) {
+    case "ArrowUp" || "w":
+      config.velocity.y = -1;
+      config.velocity.x = 0;
+      break;
+    case "ArrowDown" || "s":
+      config.velocity.y = 1;
+      config.velocity.x = 0;
+      break;
+    case "ArrowLeft" || "a":
+      config.velocity.y = 0;
+      config.velocity.x = -1;
+      break;
+    case "ArrowRight" || "d":
+      config.velocity.y = 0;
+      config.velocity.x = 1;
+      break;
+    default:
+      break;
+  }
+}
+
+function movementConsole(arrow) {
+  switch (arrow) {
     case "ArrowUp":
       config.velocity.y = -1;
       config.velocity.x = 0;

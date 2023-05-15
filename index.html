@@ -7,6 +7,10 @@
     <title>✨ Scratch Project ✨</title>
     <!-- 👇 css code file 👇 -->
     <link rel="stylesheet" href="./src/style/global.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <!-- Integrated Blank From Scratch Project -->
@@ -17,6 +21,22 @@
       <div class="container">
         <div class="wrapper-board">
           <div class="board"></div>
+          <div class="wrapper-console">
+            <div class="console">
+              <button onclick="movementConsole('ArrowUp')" style="grid-area: 1/2">
+                <i class="bx bxs-up-arrow"></i>
+              </button>
+              <button onclick="movementConsole('ArrowRight')" style="grid-area: 2/3">
+                <i class="bx bxs-right-arrow"></i>
+              </button>
+              <button onclick="movementConsole('ArrowDown')" style="grid-area: 3/2">
+                <i class="bx bxs-down-arrow"></i>
+              </button>
+              <button onclick="movementConsole('ArrowLeft')" style="grid-area: 2/1">
+                <i class="bx bxs-left-arrow"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </main>
